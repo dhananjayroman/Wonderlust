@@ -1,0 +1,150 @@
+/* ====== Airbnb-Style Navbar ====== */
+.navbar {
+  background-color: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 0.8rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 100px;
+}
+
+/* Brand */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #333 !important;
+}
+
+.navbar-brand i {
+  color: #ff385c;
+  font-size: 1.8rem;
+  margin-right: 8px;
+}
+
+/* Nav Links */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  /* ❌ removed margin-left: auto */
+}
+
+.nav-link {
+  color: #333 !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ff385c !important;
+}
+
+/* Right side buttons (optional styles) */
+.btn-signup {
+  background-color: #ff385c;
+  color: #fff !important;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+.btn-signup:hover {
+  background-color: #e0314f;
+}
+
+/* Toggler */
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* seacrh btn css */
+/* Search container */
+.search-form {
+  display: flex;
+  align-items: center;
+  
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  width: 320px;
+  transition: all 0.3s ease;
+}
+
+/* Input */
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 999px;
+}
+
+/* Button */
+.search-btn {
+  background-color: #ff385c;   /* Airbnb color */
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+.search-btn:hover {
+  background-color: #e03150;
+}
+
+/* =====================
+   MOBILE RESPONSIVE
+   ===================== */
+
+@media (max-width: 768px) {
+  .search-form {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  .search-input {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-form {
+    padding: 5px;
+  }
+
+  .search-input {
+    padding: 10px;
+  }
+
+  .search-btn {
+    width: 38px;
+    height: 38px;
+  }
+}

@@ -1,0 +1,55 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="main-content">
+  <div class="edit-form">
+    <h1>Edit Listing</h1>
+
+    <form method="POST"
+          action="/listings/<%= allLists._id %>?_method=PUT"
+          class="needs-validation"
+          enctype="multipart/form-data"
+          novalidate>
+
+      <!-- Title -->
+      <label>Title</label>
+      <input type="text" name="title" class="form-control" value="<%= allLists.title %>" required>
+      <div class="invalid-feedback">Please enter a title.</div>
+
+      <!-- Description -->
+      <label>Description</label>
+      <textarea name="description" class="form-control" rows="3" required><%= allLists.description %></textarea>
+      <div class="invalid-feedback">Please enter a description.</div>
+
+      <!-- Price -->
+      <label>Price</label>
+      <input type="number" name="price" class="form-control" value="<%= allLists.price %>" required>
+      <div class="invalid-feedback">Please enter a valid price.</div>
+
+      <!-- Location -->
+      <label>Location</label>
+      <input type="text" name="location" class="form-control" value="<%= allLists.location %>" required>
+      <div class="invalid-feedback">Please enter a location.</div>
+
+      <!-- Country -->
+      <label>Country</label>
+      <input type="text" name="country" class="form-control" value="<%= allLists.country %>" required>
+      <div class="invalid-feedback">Please enter a country.</div>
+
+      <!-- Image URL -->
+      <label >Original Image</label>
+      <div class="mb-3">
+        <img src="<%= OriginalImgUrl %>" alt="">
+      </div>
+      
+
+      <!-- Image URL -->
+      <label>New Image Upload</label>
+      <input type="file" name="image" class="form-control"  required>
+      <div class="invalid-feedback">Please enter a valid image URL.</div>
+
+      <button type="submit" class="update-btn mt-3">Update Listing</button>
+    </form>
+  </div>
+</div>
+
+

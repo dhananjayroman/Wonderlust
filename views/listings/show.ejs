@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Listings</title>
+  <link rel="stylesheet" href="/css/show.css">
+
+</head>
+
+<body>
+  <!-- index.ejs -->
+  <% layout('layouts/boilerplate') -%>
+  <script>
+    const Map_Token="<%= process.env.Map_Token %>"
+    const listing=<%- JSON.stringify(allLists) %>
+    
+  </script>
+    <h1>
+      <%= allLists.title %>
+    </h1>
+
+
+    <div class="listing">
+
+      <img src="<%= allLists.image.url %>" alt="<%= allLists.title %>">
+
+
+      <ul class="details">
+        <li><strong>Owner Name:</strong>
+          <%= allLists.owner.username %>
+        </li>
+
+        <li><strong>ID:</strong>
+          <%= allLists._id %>
+        </li>
+
+        <li><strong>Description:</strong>
+          <%= allLists.description %>
+        </li>
+        <li><strong>Price:</strong> ₹<%= allLists.price.toLocaleString("en-IN") %>
+        </li>
+        <li><strong>Location:</strong>
+          <%= allLists.location %>
+        </li>
+        <li><strong>Country:</strong>
+          <%= allLists.country %>
+        </li>
+      </ul>
+
+      <br>
+
+      <% if(currentUser && allLists.owner._id.equals(currentUser._id)) {%>
+      <div class="d-flex gap-3 mt-3">
+        <a href="/listings/<%= allLists._id %>/edit" class="btn btn-dark">
+          Edit This Listing
+        </a>
+
+        <form method="POST" action="/listings/<%= allLists._id %>?_method=DELETE">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+      <hr>
+      <% } %>
+      
+      <% if(currentUser){ %>
+      <div class="col-8 offset-3 mb-3">
+        <h3>Leave a Review</h3>
+        <form action="/listings/<%= allLists._id %>/reviews" method="POST" class="needs-validation">
+
+          <div class="mb-3 mt-3">
+            <label for="rating" class="form-label">Rating</label>
+            <input type="range" min="1" max="5" id="rating" name="reviews[rating]" value="5">
+          </div>
+
+          <div class="mb-3 mt-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea id="comment" rows="5" cols="30" name="reviews[comment]" class="form-control" required></textarea>
+          </div>
+
+          <button class="btn btn-dark">Submit Review</button>
+
+        </form>
+
+      </div>
+
+      
+    
+    <% } %>
+ <hr>
+     
+
+
+
+<ul class="list-group mt-3">
+  <% for (let review of allLists.reviews) { %>
+    <li class="list-group-item">
+      <p><strong>Create By:</strong> @<%= review.author.username %></p>
+      <p><strong>Rating:</strong> ⭐ <%= review.rating %> / 5</p>
+      <p><strong>Comment:</strong> <%= review.comment %></p>
+      <small class="text-muted">
+        Posted on: <%= review.createdAt.toDateString() %>
+      </small>
+
+      <form method="post" action="/listings/<%= allLists._id %>/reviews/<%= review._id %>?_method=DELETE">
+        <button>Delete</button>
+      </form>
+    </li>
+     <hr>
+  <% } %>
+</ul>
+
+
+<div class="col-8 offset-3 mb-3">
+  <h3>where will be</h3>
+<div id="map"></div>
+</div>
+
+
+
+<script src="/js/map.js"></script>
+    
+</body>
+
+</html>

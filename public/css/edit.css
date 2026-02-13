@@ -1,0 +1,107 @@
+/* ---------- Airbnb Style Edit Listing Page (Perfect Center + Navbar/Footer Safe) ---------- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* keeps footer below form */
+}
+
+/* Container to center form vertically & horizontally */
+.main-content {
+  flex: 1; /* pushes footer down */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px; /* a bit of breathing space */
+}
+
+/* Form box */
+.edit-form {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 520px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-form:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.edit-form h1 {
+  text-align: center;
+  color: #ff385c;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+/* Labels */
+.edit-form label {
+  display: block;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+/* Inputs and textarea */
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+  border-color: #ff385c;
+  box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+  outline: none;
+}
+
+/* Button */
+.update-btn,
+.edit-form button {
+  margin-top: 1.8rem;
+  width: 100%;
+  background-color: #ff385c;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.update-btn:hover,
+.edit-form button:hover {
+  background-color: #e03350;
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .edit-form {
+    padding: 1.5rem;
+  }
+
+  .edit-form h1 {
+    font-size: 1.5rem;
+  }
+}
+
+

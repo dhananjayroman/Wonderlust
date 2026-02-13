@@ -1,0 +1,34 @@
+footer.footer {
+  background: #fff;
+  padding: 25px 0;
+  border-top: 1px solid #eee;
+}
+
+/* Center footer heading */
+.footer-heading {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+/* Center the icons container */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Icon styles */
+.social-icons a {
+  font-size: 1.4rem;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ff385c; /* Airbnb Pink */
+  transform: scale(1.2);
+}
+
