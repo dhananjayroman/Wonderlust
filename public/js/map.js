@@ -1,24 +1,31 @@
+mapboxgl.accessToken = Map_Token;
 
-      
-      //console.log(map_token)
-      mapboxgl.accessToken = Map_Token
-    
-     const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        center: listing.geometry.coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
-        zoom: 9 // starting zoom
-    });
-    
+// safety check
+if (!listing.geometry || !listing.geometry.coordinates) {
+  console.error("Coordinates missing");
+}
 
-//console.log("cordingates",Coordinates)
-    const marker = new mapboxgl.Marker({
-    color: '#FF0000', // set marker color
-    scale: 1.5        // scale the marker size
-  })
+// create map
+const map = new mapboxgl.Map({
+  container: "map",
+  style: "mapbox://styles/mapbox/streets-v12",
+  center: listing.geometry.coordinates, // [lng, lat]
+  zoom: 9,
+});
+
+// add marker
+const marker = new mapboxgl.Marker({
+  color: "#FF385C", // Airbnb style color
+  scale: 1.5,
+})
   .setLngLat(listing.geometry.coordinates)
-  .setPopup(new mapboxgl.Popup({ closeOnClick: false })
-        .setLngLat([-96, 37.8])
-        .setHTML(`<h4>${listing.location}</h4><p>Exact location provided after booking</p>`)
-        .addTo(map))
+  .setPopup(
+    new mapboxgl.Popup({ offset: 25 })
+      .setHTML(`
+        <h4>${listing.location}</h4>
+        <p>Exact location provided after booking</p>
+      `)
+  )
   .addTo(map);
+
   

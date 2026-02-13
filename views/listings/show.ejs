@@ -13,9 +13,8 @@
   <!-- index.ejs -->
   <% layout('layouts/boilerplate') -%>
   <script>
-    const Map_Token="<%= process.env.Map_Token %>"
-    const listing=<%- JSON.stringify(allLists) %>
-    
+    const Map_Token = "<%= process.env.MAPBOX_TOKEN %>";
+    const listing = <%- JSON.stringify(allLists) %>;
   </script>
     <h1>
       <%= allLists.title %>
