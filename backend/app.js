@@ -27,6 +27,10 @@ const allowedOrigins = [
   'http://localhost:5174'
 ];
 
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin) || /^http:\/\/localhost:\d+$/.test(origin) || /^http:\/\/127\.0\.0\.1:\d+$/.test(origin)) {
@@ -93,6 +97,13 @@ app.use("/api/auth", userRouter);
 app.use("/api/inquiries", inquiryRouter);
 app.use("/api/admin", adminRouter);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Wonderlust Backend API Running"
+  });
+});
+
 // Fallback for undefined routes
 app.use((req, res, next) => {
   next(new ApiError(404, `Route ${req.originalUrl} not found`));
@@ -114,3 +125,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
+module.exports = app;
