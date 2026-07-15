@@ -10,10 +10,11 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "Wonderlust-Web",
-    allowedFormats: ["png", "jpeg", "jpg"]
+    folder: "wonderlust/properties",
+    allowed_formats: ["png", "jpeg", "jpg", "webp"],
+    transformation: [{ width: 1200, height: 800, crop: "fill", gravity: "auto" }],
+    format: "webp"
   }
 });
 
 module.exports = storage;
-

@@ -1,13 +1,10 @@
 const Listing = require("./models/listing");
 const Review = require("./models/reviews");
-
 const { reviewSchema } = require("./schema");
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    req.session.redirectUrl = req.originalUrl;
-    req.flash("error", "You must be logged in first");
-    return res.redirect("/login");
+    return res.status(401).json({ success: false, message: "You must be logged in first" });
   }
   next();
 };
@@ -19,56 +16,52 @@ module.exports.saveRedirectUrl = (req, res, next) => {
   next();
 };
 
-
-module.exports.isOwner = async(req, res, next) =>{
-  let {id} = req.params;
+module.exports.isOwner = async (req, res, next) => {
+  let { id } = req.params;
   const listing = await Listing.findById(id);
 
-  if(!listing.owner.equals(res.locals.currentUser._id))
-  {
-    req.flash("error", "You are not the owner of this Listing")
-    return res.redirect(`/listings/${id}`);
+  if (!listing.owner.equals(req.user._id)) {
+    return res.status(403).json({ success: false, message: "You are not the owner of this Listing" });
   }
-  next()
-}
-
-
+  next();
+};
 
 module.exports.validateReview = (req, res, next) => {
   const { error } = reviewSchema.validate(req.body);
-
   if (error) {
     const errMsg = error.details.map(el => el.message).join(",");
-    req.flash("error", errMsg);
-    return res.redirect("back");
+    return res.status(400).json({ success: false, message: errMsg });
   } else {
     next();
   }
 };
 
-
 module.exports.isReviewAuthor = async (req, res, next) => {
   try {
     const { id, reviewId } = req.params;
-
     const review = await Review.findById(reviewId);
 
-    // ✅ If review not found
     if (!review) {
-      req.flash("error", "Review not found");
-      return res.redirect(`/listings/${id}`);
+      return res.status(404).json({ success: false, message: "Review not found" });
     }
 
-    // ✅ Check logged-in user is author
     if (!review.author.equals(req.user._id)) {
-      req.flash("error", "You are not the author of this review");
-      return res.redirect(`/listings/${id}`);
+      return res.status(403).json({ success: false, message: "You are not the author of this review" });
     }
 
     next();
   } catch (err) {
-    console.log(err);
-    req.flash("error", "Something went wrong");
-    res.redirect("back");
+    console.error(err);
+    return res.status(500).json({ success: false, message: "Something went wrong" });
   }
+};
+
+module.exports.isAdmin = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ success: false, message: "You must be logged in first" });
+  }
+  if (req.user && req.user.role === 'admin') {
+    return next();
+  }
+  return res.status(403).json({ success: false, message: "Admin access required" });
 };

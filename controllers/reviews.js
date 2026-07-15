@@ -1,25 +1,26 @@
 const Listing = require("../models/listing");
-const Review = require("../models/reviews");   // singular
+const Review = require("../models/reviews");
 
-
-module.exports.createReview =  async (req, res) => {
+module.exports.createReview = async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      return res.status(404).json({ success: false, message: "Listing not found" });
+    }
 
-    const newReview = new Review(req.body.reviews);
-    newReview.author=req.user._id;
-
-    console.log(newReview)
+    const data = req.body.reviews || req.body;
+    const newReview = new Review(data);
+    newReview.author = req.user._id;
 
     listing.reviews.push(newReview);
 
     await newReview.save();
     await listing.save();
 
-    res.redirect(`/listings/${listing._id}`);
+    res.status(201).json({ success: true, review: newReview });
   } catch (err) {
-    console.log(err);
-    res.send("Error creating review");
+    console.error(err);
+    res.status(500).json({ success: false, message: "Error creating review" });
   }
 }
 
@@ -33,9 +34,9 @@ module.exports.deleteReview = async (req, res) => {
 
     await Review.findByIdAndDelete(reviewId);
 
-    res.redirect(`/listings/${id}`);
+    res.status(200).json({ success: true, message: "Review deleted successfully" });
   } catch (err) {
-    console.log(err);
-    res.send("Error deleting review");
+    console.error(err);
+    res.status(500).json({ success: false, message: "Error deleting review" });
   }
 }
